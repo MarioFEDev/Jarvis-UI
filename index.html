@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>JARVIS · Intelligent Assistant</title>
+  <meta name="description" content="JARVIS is a futuristic AI assistant interface that answers questions, writes code, explains concepts and helps you brainstorm ideas.">
+  <meta name="theme-color" content="#06080c">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-ai-state="booting" class="is-booting">
+  <a class="skip-link" href="#composer-input">Skip to message input</a>
+
+  <!-- ============ Icon sprite ============ -->
+  <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-paperclip" viewBox="0 0 24 24"><path d="m21 11-8.6 8.6a5 5 0 0 1-7-7l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4L15.5 7"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 4l-4 16"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0"/><path d="M12 19.5h.01"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </svg>
+
+  <!-- Avatar orb used by assistant messages -->
+  <template id="orb-template">
+    <div class="orb orb--avatar" aria-hidden="true">
+      <span class="orb__halo"></span>
+      <span class="orb__ring orb__ring--arc"></span>
+      <span class="orb__ring orb__ring--scan"></span>
+      <span class="orb__core"><span class="orb__plasma"></span></span>
+    </div>
+  </template>
+
+  <div class="app" id="app" data-sidebar="open">
+    <!-- ============ Sidebar ============ -->
+    <aside class="sidebar" id="sidebar" aria-label="Sidebar">
+      <div class="sidebar__header">
+        <div class="brand">
+          <div class="orb orb--brand" aria-hidden="true">
+            <span class="orb__halo"></span>
+            <span class="orb__ring orb__ring--arc"></span>
+            <span class="orb__ring orb__ring--scan"></span>
+            <span class="orb__core"><span class="orb__plasma"></span></span>
+          </div>
+          <div class="brand__text label">
+            <span class="brand__name">J.A.R.V.I.S.</span>
+            <span class="brand__status"><span class="status-dot status-dot--ai"></span><span data-ai-label="short">Initializing</span></span>
+          </div>
+        </div>
+        <button type="button" class="icon-btn sidebar__close" data-action="close-sidebar" aria-label="Close sidebar">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+        </button>
+      </div>
+
+      <button type="button" class="btn-new" data-action="new-chat" data-tooltip="New chat">
+        <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
+        <span class="label">New chat</span>
+      </button>
+
+      <nav class="sidebar__nav" aria-label="Primary">
+        <ul role="list">
+          <li><button type="button" class="nav-item" data-action="open-history" data-tooltip="Conversation history"><svg class="icon" aria-hidden="true"><use href="#i-history"></use></svg><span class="label">Conversation history</span></button></li>
+          <li><button type="button" class="nav-item" data-action="open-capabilities" data-tooltip="Explore capabilities"><svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg><span class="label">Explore capabilities</span></button></li>
+          <li><button type="button" class="nav-item" data-action="open-system" data-tooltip="System information"><svg class="icon" aria-hidden="true"><use href="#i-cpu"></use></svg><span class="label">System information</span></button></li>
+          <li><button type="button" class="nav-item" data-action="open-settings" data-tooltip="Settings"><svg class="icon" aria-hidden="true"><use href="#i-sliders"></use></svg><span class="label">Settings</span></button></li>
+        </ul>
+      </nav>
+
+      <section class="sidebar__recent" aria-labelledby="recent-heading">
+        <div class="sidebar__section-head">
+          <h2 class="sidebar__heading" id="recent-heading">Recent</h2>
+          <button type="button" class="link-btn" data-action="open-history">View all</button>
+        </div>
+        <ul class="recent-list" id="recent-list" role="list"></ul>
+      </section>
+
+      <footer class="sidebar__status" aria-label="System status">
+        <div class="status-row">
+          <span class="status-dot status-dot--ai"></span>
+          <span class="status-row__label label">AI core</span>
+          <span class="status-row__value label" data-ai-label="long">Initializing</span>
+        </div>
+        <div class="status-row">
+          <span class="status-dot" id="conn-dot"></span>
+          <span class="status-row__label label">Connection</span>
+          <span class="status-row__value label" id="conn-label">Secure</span>
+        </div>
+        <div class="status-row">
+          <span class="status-dot status-dot--model status-dot--static"></span>
+          <span class="status-row__label label">Model</span>
+          <span class="status-row__value label" data-model-label>Mock Engine</span>
+        </div>
+      </footer>
+    </aside>
+
+    <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+    <!-- ============ Main ============ -->
+    <main class="main" id="main" data-view="welcome">
+      <header class="topbar">
+        <button type="button" class="icon-btn sidebar-toggle" id="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Collapse sidebar" data-tooltip="Collapse sidebar">
+          <span class="toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+        <span class="topbar__divider" aria-hidden="true"></span>
+        <div class="topbar__title">
+          <span class="topbar__eyebrow">Session</span>
+          <span id="conversation-title">New conversation</span>
+        </div>
+        <div class="topbar__spacer"></div>
+        <div class="status-chip" aria-hidden="true">
+          <div class="orb orb--chip">
+            <span class="orb__halo"></span>
+            <span class="orb__ring orb__ring--arc"></span>
+            <span class="orb__ring orb__ring--scan"></span>
+            <span class="orb__core"><span class="orb__plasma"></span></span>
+          </div>
+          <span class="status-chip__text" data-ai-label="long">Initializing</span>
+        </div>
+        <button type="button" class="icon-btn" data-action="new-chat" aria-label="New chat" data-tooltip="New chat">
+          <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
+        </button>
+      </header>
+
+      <div class="stage" id="stage">
+        <!-- Welcome screen -->
+        <section class="welcome" id="welcome" aria-labelledby="greeting">
+          <div class="welcome__orb reveal" style="--i:0">
+            <div class="orb orb--hero" aria-hidden="true">
+              <span class="orb__halo"></span>
+              <span class="orb__wave"></span>
+              <span class="orb__ring orb__ring--dashed"></span>
+              <span class="orb__ring orb__ring--arc"></span>
+              <span class="orb__ring orb__ring--scan"></span>
+              <span class="orb__core"><span class="orb__plasma"></span></span>
+            </div>
+          </div>
+          <p class="status-pill reveal" style="--i:1"><span class="status-dot status-dot--ai"></span>JARVIS <span data-ai-label="short">Initializing</span></p>
+          <h1 class="welcome__title reveal" id="greeting" style="--i:2">
+            <span class="welcome__greet" id="greeting-time">Good morning.</span>
+            <span class="welcome__ask">How can I assist you today?</span>
+          </h1>
+          <p class="welcome__sub reveal" style="--i:3">Ask questions, write and debug code, unpack complex ideas or brainstorm your next move. I'm ready when you are.</p>
+
+          <ul class="suggestions" id="suggestions" role="list" aria-label="Suggested prompts">
+            <li>
+              <button type="button" class="card reveal" style="--i:4; --card-rgb: 64, 224, 255" data-action="suggestion" data-prompt="Why is the sky blue, and why do sunsets look orange?">
+                <span class="card__icon"><svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg></span>
+                <span class="card__body">
+                  <span class="card__title">Answer questions</span>
+                  <span class="card__desc">Clear, reasoned answers on science, history, tech and more.</span>
+                </span>
+                <svg class="icon card__arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="card reveal" style="--i:5; --card-rgb: 96, 170, 255" data-action="suggestion" data-prompt="Write a JavaScript debounce function with a short usage example.">
+                <span class="card__icon"><svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg></span>
+                <span class="card__body">
+                  <span class="card__title">Write code</span>
+                  <span class="card__desc">Generate, review and refactor clean, production-ready code.</span>
+                </span>
+                <svg class="icon card__arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="card reveal" style="--i:6; --card-rgb: 72, 232, 196" data-action="suggestion" data-prompt="Explain how neural networks learn, in simple terms.">
+                <span class="card__icon"><svg class="icon" aria-hidden="true"><use href="#i-book"></use></svg></span>
+                <span class="card__body">
+                  <span class="card__title">Explain concepts</span>
+                  <span class="card__desc">Break down complex topics into simple, intuitive terms.</span>
+                </span>
+                <svg class="icon card__arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="card reveal" style="--i:7; --card-rgb: 146, 156, 255" data-action="suggestion" data-prompt="Brainstorm five product ideas for a smart home assistant.">
+                <span class="card__icon"><svg class="icon" aria-hidden="true"><use href="#i-bulb"></use></svg></span>
+                <span class="card__body">
+                  <span class="card__title">Brainstorm ideas</span>
+                  <span class="card__desc">Explore fresh directions, names, plans and strategies.</span>
+                </span>
+                <svg class="icon card__arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              </button>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Active conversation -->
+        <section class="thread" id="thread" role="log" aria-label="Conversation" hidden></section>
+      </div>
+
+      <!-- Composer -->
+      <footer class="composer-wrap">
+        <form class="composer" id="composer" autocomplete="off" novalidate>
+          <div class="composer__attachments" id="attachments" hidden></div>
+          <div class="composer__row">
+            <button type="button" class="icon-btn composer__attach" id="attach-btn" aria-label="Attach files" data-tooltip="Attach files">
+              <svg class="icon" aria-hidden="true"><use href="#i-paperclip"></use></svg>
+            </button>
+            <input type="file" id="file-input" multiple hidden>
+            <label for="composer-input" class="sr-only">Message JARVIS</label>
+            <textarea id="composer-input" class="composer__input" rows="1" placeholder="Ask JARVIS anything..." aria-describedby="composer-hint composer-note" enterkeyhint="send"></textarea>
+            <button type="submit" class="send-btn" id="send-btn" aria-label="Send message" data-tooltip="Send" disabled>
+              <svg class="icon icon--send" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+              <svg class="icon icon--stop" aria-hidden="true"><use href="#i-stop"></use></svg>
+            </button>
+          </div>
+        </form>
+        <div class="composer-meta">
+          <p class="composer-meta__hint" id="composer-hint"></p>
+          <p class="composer-meta__note" id="composer-note">Demo mode with simulated responses. AI output may require verification.</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Reusable panel for history, capabilities, system info and settings -->
+  <dialog class="panel" id="panel" aria-labelledby="panel-title">
+    <div class="panel__inner">
+      <header class="panel__header">
+        <span class="panel__icon" id="panel-icon" aria-hidden="true"></span>
+        <h2 class="panel__title" id="panel-title">Panel</h2>
+        <button type="button" class="icon-btn panel__close" data-action="close-panel" aria-label="Close panel">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+        </button>
+      </header>
+      <div class="panel__body" id="panel-body"></div>
+    </div>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" popover="manual" aria-live="polite"></div>
+  <div class="tooltip" id="tooltip" aria-hidden="true" hidden></div>
+  <p class="sr-only" id="sr-status" aria-live="polite"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
